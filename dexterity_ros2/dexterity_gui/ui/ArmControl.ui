@@ -1,0 +1,789 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui version="4.0">
+ <class>ArmControlForm</class>
+ <widget class="QWidget" name="ArmControlForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1067</width>
+    <height>749</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dexterity Arm Control</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout" stretch="0,1,0">
+   <item>
+    <layout class="QHBoxLayout" name="statusLayout" stretch="0,1,0">
+     <item>
+      <widget class="QLabel" name="statusCaption">
+       <property name="styleSheet">
+        <string notr="true">font-weight: bold;</string>
+       </property>
+       <property name="text">
+        <string>CURRENT STATUS:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="statusLabel">
+       <property name="text">
+        <string>INITIALIZED</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="feedbackLabel" />
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="columnsLayout" stretch="0,1">
+     <item>
+      <layout class="QVBoxLayout" name="controlsLayout">
+       <item>
+        <widget class="QGroupBox" name="perceptionBox">
+         <property name="title">
+          <string>Perception Parameters</string>
+         </property>
+         <layout class="QFormLayout" name="perceptionLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="trackerNameLabel">
+            <property name="text">
+             <string>Tracker Name</string>
+            </property>
+            <property name="toolTip">
+             <string>visp: ViSP model-based tracker inside the dexterity node.
+icg / m3t: external trackers; the node only listens to their poses on /tracked_object_poses.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="trackerName">
+            <item>
+             <property name="text">
+              <string>visp</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>icg</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>m3t</string>
+             </property>
+            </item>
+            <property name="toolTip">
+             <string>visp: ViSP model-based tracker inside the dexterity node.
+icg / m3t: external trackers; the node only listens to their poses on /tracked_object_poses.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="trackerModeLabel">
+            <property name="text">
+             <string>Tracking Mode (ViSP)</string>
+            </property>
+            <property name="toolTip">
+             <string>Image features ViSP follows (ViSP tracker only).
+me: moving edges (contours, textureless objects)
+klt: keypoints (needs texture)
+hybrid: both</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="trackerMode">
+            <item>
+             <property name="text">
+              <string>hybrid</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>me</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>klt</string>
+             </property>
+            </item>
+            <property name="toolTip">
+             <string>Image features ViSP follows (ViSP tracker only).
+me: moving edges (contours, textureless objects)
+klt: keypoints (needs texture)
+hybrid: both</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="objectModelLabel">
+            <property name="text">
+             <string>Object Model File Name</string>
+            </property>
+            <property name="toolTip">
+             <string>CAD model (.cao) the tracker matches. Must match the real object.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="objectModel">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>CAD model (.cao) the tracker matches. Must match the real object.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="objectSideLabel">
+            <property name="text">
+             <string>Object Side</string>
+            </property>
+            <property name="toolTip">
+             <string>Point of interest on the object that the gripper approaches.
+Fixed offsets measured for one object; origin is the model origin.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="objectSide">
+            <item>
+             <property name="text">
+              <string>origin</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>front_level</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>front_tilt</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>front</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>top</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>right</string>
+             </property>
+            </item>
+            <property name="toolTip">
+             <string>Point of interest on the object that the gripper approaches.
+Fixed offsets measured for one object; origin is the model origin.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="minAccuracyLabel">
+            <property name="text">
+             <string>Min Accuracy Threshold</string>
+            </property>
+            <property name="toolTip">
+             <string>Poses with a lower accuracy are invalid and trigger a new track.
+Higher is more cautious but can stall the motion if tracking is weak.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="minAccuracy">
+            <property name="suffix">
+             <string> %</string>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="value">
+             <number>80</number>
+            </property>
+            <property name="toolTip">
+             <string>Poses with a lower accuracy are invalid and trigger a new track.
+Higher is more cautious but can stall the motion if tracking is weak.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLabel" name="vispLabel">
+            <property name="styleSheet">
+             <string notr="true">font-weight: bold;</string>
+            </property>
+            <property name="text">
+             <string>ViSP AprilTag Bootstrapping</string>
+            </property>
+            <property name="toolTip">
+             <string>The first pose of the ViSP tracker comes from an AprilTag. Only used with tracker visp.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="tagSizeLabel">
+            <property name="text">
+             <string>Tag Size</string>
+            </property>
+            <property name="toolTip">
+             <string>Edge length of the black square of the real AprilTag (ViSP only).
+A wrong value gives a wrong distance.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="tagSize">
+            <property name="suffix">
+             <string> mm</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>72</number>
+            </property>
+            <property name="toolTip">
+             <string>Edge length of the black square of the real AprilTag (ViSP only).
+A wrong value gives a wrong distance.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="tagFamilyLabel">
+            <property name="text">
+             <string>Tag Family</string>
+            </property>
+            <property name="toolTip">
+             <string>AprilTag family (ViSP only): 36h11, 25h9, 16h5 or standard41h12.
+Must match the printed tag.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="tagFamily">
+            <property name="text">
+             <string>36h11</string>
+            </property>
+            <property name="toolTip">
+             <string>AprilTag family (ViSP only): 36h11, 25h9, 16h5 or standard41h12.
+Must match the printed tag.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="poseEstimationMethodLabel">
+            <property name="text">
+             <string>Pose Estimation Method</string>
+            </property>
+            <property name="toolTip">
+             <string>Algorithm that turns the tag corners into a pose (ViSP only).
+homography_virtual_vs, homography, dementhon_virtual_vs, lagrange_virtual_vs, best_virtual_vs, homography_orthogonal_iteration</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="poseEstimationMethod">
+            <property name="text">
+             <string>homography_virtual_vs</string>
+            </property>
+            <property name="toolTip">
+             <string>Algorithm that turns the tag corners into a pose (ViSP only).
+homography_virtual_vs, homography, dementhon_virtual_vs, lagrange_virtual_vs, best_virtual_vs, homography_orthogonal_iteration</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="controlsSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="controllerBox">
+         <property name="title">
+          <string>Controller Parameters</string>
+         </property>
+         <layout class="QFormLayout" name="controllerLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="openLoopModeLabel">
+            <property name="text">
+             <string>Open Loop Mode</string>
+            </property>
+            <property name="toolTip">
+             <string>Off: plan, move part of the way, look again, replan (corrects tracking error and object motion).
+On: plan once and execute the whole trajectory without re-checking.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="openLoopMode">
+            <property name="text">
+             <string />
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Off: plan, move part of the way, look again, replan (corrects tracking error and object motion).
+On: plan once and execute the whole trajectory without re-checking.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="orientationLockLabel">
+            <property name="text">
+             <string>Orientation Lock</string>
+            </property>
+            <property name="toolTip">
+             <string>Off: shortest rotation from the current gripper orientation.
+On: the gripper takes the exact orientation of the inspection pose.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="orientationLock">
+            <property name="text">
+             <string />
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Off: shortest rotation from the current gripper orientation.
+On: the gripper takes the exact orientation of the inspection pose.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="inspectionDistanceLabel">
+            <property name="text">
+             <string>Inspection Distance</string>
+            </property>
+            <property name="toolTip">
+             <string>Stand-off distance between the point of interest and the gripper.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="inspectionDistance">
+            <property name="suffix">
+             <string> cm</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>200</number>
+            </property>
+            <property name="value">
+             <number>30</number>
+            </property>
+            <property name="toolTip">
+             <string>Stand-off distance between the point of interest and the gripper.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="gripperFrameLabel">
+            <property name="text">
+             <string>Gripper Frame ID</string>
+            </property>
+            <property name="toolTip">
+             <string>TF frame used as the gripper. Its +X axis must point out of the gripper.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="gripperFrame">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>dexterity_tool_frame</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>dexterity_left_finger_frame</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>dexterity_right_finger_frame</string>
+             </property>
+            </item>
+            <property name="toolTip">
+             <string>TF frame used as the gripper. Its +X axis must point out of the gripper.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="truncationTypeLabel">
+            <property name="text">
+             <string>Truncation Type</string>
+            </property>
+            <property name="toolTip">
+             <string>Closed loop only: how much of each plan is executed before looking again.
+half_trajectory: first half
+quater_trajectory: first quarter
+step_by_step: only 3 points
+Smaller steps re-check more often but progress slower.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="truncationType">
+            <item>
+             <property name="text">
+              <string>half_trajectory</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>quater_trajectory</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>step_by_step</string>
+             </property>
+            </item>
+            <property name="toolTip">
+             <string>Closed loop only: how much of each plan is executed before looking again.
+half_trajectory: first half
+quater_trajectory: first quarter
+step_by_step: only 3 points
+Smaller steps re-check more often but progress slower.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="poseMarginLabel">
+            <property name="text">
+             <string>Inspection Pose Margin Error</string>
+            </property>
+            <property name="toolTip">
+             <string>Allowed difference between the distance to the object and the inspection distance for the pose to count as reached.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="poseMargin">
+            <property name="suffix">
+             <string> mm</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>5</number>
+            </property>
+            <property name="toolTip">
+             <string>Allowed difference between the distance to the object and the inspection distance for the pose to count as reached.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="orientationMarginLabel">
+            <property name="text">
+             <string>Inspection Orientation Margin Error</string>
+            </property>
+            <property name="toolTip">
+             <string>Allowed orientation error for the pose to count as reached.
+Both margins must be met to start the final sequence (touch) or to finish the inspection.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="orientationMargin">
+            <property name="suffix">
+             <string> deg</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>180</number>
+            </property>
+            <property name="value">
+             <number>15</number>
+            </property>
+            <property name="toolTip">
+             <string>Allowed orientation error for the pose to count as reached.
+Both margins must be met to start the final sequence (touch) or to finish the inspection.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="planningTimeoutLabel">
+            <property name="text">
+             <string>Planning Timeout</string>
+            </property>
+            <property name="toolTip">
+             <string>Time MoveIt may spend on each plan.
+Longer finds harder plans but makes each step slower.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSpinBox" name="planningTimeout">
+            <property name="suffix">
+             <string> ms</string>
+            </property>
+            <property name="minimum">
+             <number>10</number>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
+            <property name="value">
+             <number>500</number>
+            </property>
+            <property name="toolTip">
+             <string>Time MoveIt may spend on each plan.
+Longer finds harder plans but makes each step slower.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="trackerColumnLayout" stretch="1">
+       <item>
+        <widget class="QGroupBox" name="trackerBox">
+         <property name="title">
+          <string>Tracker</string>
+         </property>
+         <layout class="QVBoxLayout" name="trackerLayout" stretch="1,0,0,0">
+          <item>
+           <widget class="QGraphicsView" name="trackerView">
+            <property name="minimumSize">
+             <size>
+              <width>320</width>
+              <height>240</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Camera image (tracker image while tracking). After Start Bootstrapping, click the 6 detection points here.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="trackerButtonsLayout">
+            <item>
+             <widget class="QPushButton" name="startBootstrapButton">
+              <property name="toolTip">
+               <string>Freeze the image and click the 6 detection points (see Show Reference)</string>
+              </property>
+              <property name="text">
+               <string>Start Bootstrapping</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="stopBootstrapButton">
+              <property name="text">
+               <string>Stop Bootstrapping</string>
+              </property>
+              <property name="toolTip">
+               <string>Clear the selected points and unfreeze the image.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="startTrackerButton">
+              <property name="toolTip">
+               <string>Send the 6 points to the ICG / M3T tracker</string>
+              </property>
+              <property name="text">
+               <string>Start Tracker</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="showReferenceButton">
+              <property name="text">
+               <string>Show Reference</string>
+              </property>
+              <property name="toolTip">
+               <string>Show where to click the 6 detection points for the selected object model.</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="cameraTopic">
+            <property name="visible">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>/wrist_mounted_camera/image</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="trackerImageTopic">
+            <property name="visible">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>/M3T_Tracker_Streaming/image_raw</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="actionsBox">
+     <property name="title">
+      <string>Actions</string>
+     </property>
+     <layout class="QGridLayout" name="actionsLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="startTouchButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Start Touch</string>
+        </property>
+        <property name="toolTip">
+         <string>Move to the inspection distance in front of the object, then approach it to touch it.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="startFollowButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Start Follow</string>
+        </property>
+        <property name="toolTip">
+         <string>Keep the inspection pose relative to a moving object.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="startInspectButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Start Inspect</string>
+        </property>
+        <property name="toolTip">
+         <string>Move to the inspection pose in front of a still object and finish there.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="startGraspButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Start Grasp</string>
+        </property>
+        <property name="toolTip">
+         <string>Grasp operation.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="stopButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+        <property name="toolTip">
+         <string>Halt the current task.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="resetArmButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Reset Arm</string>
+        </property>
+        <property name="toolTip">
+         <string>Return the arm to its home state.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources />
+ <connections />
+</ui>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>hazmat_detection</name>
+  <version>0.1.0</version>
+  <description>
+    Detects hazmat signs in a camera image by SIFT template matching with Hough voting.
+    ROS 2 port of the GETbot hazmat_detection node; publishes vision_msgs/Detection2DArray
+    and an annotated image.
+  </description>
+  <maintainer email="ashiq.lathief@gmail.com">ashiq</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>ament_index_cpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>vision_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>libopencv-dev</depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

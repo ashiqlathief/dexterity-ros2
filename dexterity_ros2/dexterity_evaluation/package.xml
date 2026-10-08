@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>dexterity_evaluation</name>
+  <version>0.1.0</version>
+  <description>
+    Ground truth evaluation of dexterity in the Gazebo simulation: tracking error against the true object pose,
+    true distance and approach angle of the gripper, MoveIt planning times. One CSV per task plus a summary.
+    ROS 2 port of the simulator mode of the GET Lab closed_loop_touch (ROS 1).
+  </description>
+  <maintainer email="ashiq.lathief@gmail.com">ashiq</maintainer>
+  <license>BSD</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>dexterity_msgs</exec_depend>
+  <exec_depend>gz_transport_vendor</exec_depend>
+  <exec_depend>gz_msgs_vendor</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

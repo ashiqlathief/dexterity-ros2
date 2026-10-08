@@ -1,0 +1,37 @@
+# Dexterity parameters for the simulated UR5e (Robotiq 2F-85, wrist camera), see urdf/ur_camera.urdf.xacro
+dexterity:
+  ros__parameters:
+    simulator_mode: true
+
+    robot:
+      move_group: "ur_manipulator"
+      home_state: "Home"             # added to the SRDF by ur_sim.launch.py, the camera looks at the target
+      trajectory_action: "/scaled_joint_trajectory_controller/follow_joint_trajectory"
+      image_topic: "/wrist_mounted_camera/image"
+      camera_info_topic: "/wrist_mounted_camera/camera_info"
+      base_frame: "base_link"
+      camera_optical_frame: "camera_optical_link"   # in the URDF, Z forward
+
+    perception:
+      tracker_name: "visp"
+      tracker_mode: "hybrid"
+      object_model_filename: "cube_at_rl2.cao"
+      min_accuracy_threshold: 80.0
+      object_side: "origin"          # the cube's tag frame is the inspection target
+      tag_size: 0.072
+      tag_family: "36h11"
+      pose_estimation_method: "homography_virtual_vs"
+      external_pose_topic: "/tracked_object_poses"
+      show_tracking_window: true
+
+    controller:
+      operation_type: "inspect_stationary"
+      open_loop_mode: false
+      orientation_lock: false
+      inspection_distance: 0.3       # m
+      inspection_pose_error_margin: 5.0         # mm
+      inspection_orientation_error_margin: 15.0 # degrees
+      gripper_frame_id: "dexterity_tool_frame"  # in the URDF, +X out of the gripper
+      truncation_type: "half_trajectory"
+      planning_timeout: 500.0        # ms, 6 DoF arm: pose goals need more time than a 7 DoF arm
+      log_file: "controller_log.txt"

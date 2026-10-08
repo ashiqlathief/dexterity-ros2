@@ -1,0 +1,9 @@
+hazmat_detection:
+  ros__parameters:
+    image_topic: "/wrist_mounted_camera/image"
+    # Empty: <share>/hazmat_detection/templates. Every image in the folder is a template, its file name is the label
+    template_path: ""
+    # Ratio test of nearest to second nearest SIFT match
+    snn_ratio: 0.9
+    # Minimum number of matched features voting for the same template pose
+    min_votes: 10

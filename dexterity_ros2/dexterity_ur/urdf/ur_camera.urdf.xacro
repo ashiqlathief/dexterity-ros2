@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!-- UR arm on a stand + Robotiq 2F-85 + wrist camera for Gazebo (gz_ros2_control).
+     Same as ur_simulation_gz/urdf/ur_gz.urdf.xacro, but with the arm base raised (base_height) and the gripper and
+     camera added. Frames for dexterity are camera_optical_link (camera) and dexterity_tool_frame (+X out of the gripper).
+     Keep colons followed by a space out of comments, ros2 launch reads this file as YAML. -->
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="$(arg name)">
+
+  <xacro:arg name="name" default="ur"/>
+  <xacro:arg name="ur_type" default="ur5e"/>
+  <xacro:arg name="tf_prefix" default=""/>
+  <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_params" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
+  <xacro:arg name="physical_params" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
+  <xacro:arg name="visual_params" default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"/>
+  <xacro:arg name="transmission_hw_interface" default=""/>
+  <xacro:arg name="safety_limits" default="false"/>
+  <xacro:arg name="safety_pos_margin" default="0.15"/>
+  <xacro:arg name="safety_k_position" default="20"/>
+  <xacro:arg name="simulation_controllers" default=""/>
+  <xacro:arg name="ros_namespace" default=""/>
+  <xacro:arg name="base_height" default="0.3"/>
+
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find ur_simulation_gz)/urdf/ur_gz.ros2_control.xacro"/>
+  <xacro:include filename="$(find robotiq_description)/urdf/ur_to_robotiq_adapter.urdf.xacro"/>
+  <xacro:include filename="$(find robotiq_description)/urdf/robotiq_2f_85_macro.urdf.xacro"/>
+
+  <link name="world"/>
+
+  <!-- arm; absolute mesh paths so that Gazebo finds the meshes -->
+  <xacro:ur_robot
+    name="$(arg name)"
+    tf_prefix="$(arg tf_prefix)"
+    parent="world"
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)"
+    physical_parameters_file="$(arg physical_params)"
+    visual_parameters_file="$(arg visual_params)"
+    safety_limits="$(arg safety_limits)"
+    safety_pos_margin="$(arg safety_pos_margin)"
+    safety_k_position="$(arg safety_k_position)"
+    force_abs_paths="true">
+    <origin xyz="0 0 $(arg base_height)" rpy="0 0 0"/>
+  </xacro:ur_robot>
+
+  <gazebo reference="world"/>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(arg simulation_controllers)</parameters>
+      <ros>
+        <namespace>$(arg ros_namespace)</namespace>
+      </ros>
+    </plugin>
+  </gazebo>
+
+  <xacro:ur_ros2_control
+    name="$(arg name)"
+    tf_prefix="$(arg tf_prefix)"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+  />
+
+  <!-- adapter plate on the flange, then the gripper -->
+  <xacro:ur_to_robotiq prefix="" parent="tool0" child="gripper_mount"/>
+  <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="gripper_mount"
+                         sim_gazebo="true" use_fake_hardware="false">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:robotiq_gripper>
+
+  <!-- frame for dexterity, between the fingertips, +X points out of the gripper -->
+  <link name="dexterity_tool_frame"/>
+  <joint name="dexterity_tool_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/>
+    <child link="dexterity_tool_frame"/>
+    <origin xyz="0 0 0.145" rpy="0 -1.5707963 0"/>
+  </joint>
+
+  <!-- same as dexterity_tool_frame (+X out of the gripper), but at the tip of one finger of the open gripper.
+       Fixed to the gripper base, so they do not follow the fingers when the gripper closes -->
+  <link name="dexterity_left_finger_frame"/>
+  <joint name="dexterity_left_finger_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/>
+    <child link="dexterity_left_finger_frame"/>
+    <origin xyz="0.0425 0 0.145" rpy="0 -1.5707963 0"/>
+  </joint>
+  <link name="dexterity_right_finger_frame"/>
+  <joint name="dexterity_right_finger_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/>
+    <child link="dexterity_right_finger_frame"/>
+    <origin xyz="-0.0425 0 0.145" rpy="0 -1.5707963 0"/>
+  </joint>
+
+  <!-- wrist camera on the side of the gripper, looks along the gripper axis (X forward, Y left, Z up) -->
+  <link name="camera_link">
+    <visual>
+      <geometry><box size="0.03 0.09 0.025"/></geometry>
+      <material name="camera_black"><color rgba="0.1 0.1 0.1 1"/></material>
+    </visual>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="1e-4" iyy="1e-4" izz="1e-4" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <parent link="robotiq_85_base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0.0 0.055 0.06" rpy="0 -1.5707963 -1.5707963"/>
+  </joint>
+
+  <!-- optical frame of the image (Z forward, X right, Y down) -->
+  <link name="camera_optical_link"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_optical_link"/>
+    <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+  </joint>
+
+  <gazebo reference="camera_link">
+    <sensor name="wrist_camera" type="camera">
+      <always_on>true</always_on>
+      <update_rate>15</update_rate>
+      <visualize>true</visualize>
+      <topic>wrist_mounted_camera/image</topic>
+      <gz_frame_id>camera_optical_link</gz_frame_id>
+      <camera>
+        <horizontal_fov>1.2</horizontal_fov>
+        <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+        <clip><near>0.05</near><far>5</far></clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+</robot>

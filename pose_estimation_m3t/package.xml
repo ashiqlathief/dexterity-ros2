@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>pose_estimation_m3t</name>
+  <version>0.1.0</version>
+  <description>
+    Object pose estimation with M3T (Multi-body Multi-modality Multi-camera 3D Tracker, M. Stoiber).
+    ROS 2 port of the GET Lab Object Handling node. Tracks a body from 6 points clicked in the
+    dexterity GUI and publishes its pose for dexterity (tracker "m3t").
+  </description>
+  <maintainer email="ashiq.lathief@gmail.com">ashiq</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>ament_index_cpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>dexterity_msgs</depend>
+  <depend>eigen</depend>
+  <depend>glew</depend>
+  <depend>glfw3</depend>
+  <depend>libopencv-dev</depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="object_pedestal">
+    <static>true</static>
+    <!-- Top at 0.7415 m like the pedestal of apriltag_target -->
+    <link name="pedestal">
+      <collision name="collision">
+        <pose>0 0 0.37075 0 0 0</pose>
+        <geometry><box><size>0.1 0.1 0.7415</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0.37075 0 0 0</pose>
+        <geometry><box><size>0.1 0.1 0.7415</size></box></geometry>
+        <material>
+          <ambient>0.3 0.3 0.35 1</ambient>
+          <diffuse>0.3 0.3 0.35 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

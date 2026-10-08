@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>dexterity</name>
+  <version>0.2.0</version>
+  <description>
+    Closed-loop hand-eye coordination for robot arms (ROS 2 port of the GET Lab dexterity node,
+    M.Sc. thesis S. Charania, 2023). Tracks an object with a wrist camera and moves the arm with
+    MoveIt 2 until the gripper reaches the inspection / touch pose.
+  </description>
+  <maintainer email="ashiq.lathief@gmail.com">ashiq</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_action</depend>
+  <depend>ament_index_cpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>control_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_eigen</depend>
+  <depend>cv_bridge</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>visp</depend>
+  <depend>dexterity_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,10 @@
+%YAML:1.2
+reference_points:
+  - [ -0.061, -0.075, -0.027]
+  - [ -0.061, -0.075, -0.027]
+  - [ -0.032,  0.075,  0.000]
+  - [  0.032,  0.075, 0.000]
+  - [  0.032, -0.075,  0.000]
+  - [ -0.032, -0.075,  0.000]  
+
+detector_image_path: "./asymmetric_pipestar_without_cap_manual_detector.png"

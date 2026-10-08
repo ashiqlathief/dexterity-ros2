@@ -1,0 +1,20 @@
+pose_estimation_icg:
+  ros__parameters:
+    # Wrist camera of the UR5e in Gazebo (ur_sim.launch.py)
+    rgb_image_topic: "/wrist_mounted_camera/image"
+    rgb_camera_info_topic: "/wrist_mounted_camera/camera_info"
+    use_depth: false
+    depth_image_topic: "/wrist_mounted_camera/depth_image"
+    depth_camera_info_topic: "/wrist_mounted_camera/camera_info"
+
+    # Body used when the GUI sends a model that has no folder in model_directory
+    default_body: "asymmetric_pipestar_without_cap"
+    # Empty: <share>/pose_estimation_icg/models. Region models (<body>_region_model.bin) are generated there on first use
+    model_directory: ""
+
+    # Open OpenCV windows with the tracking result (needs a display)
+    display_images: false
+
+    pose_topic: "/tracked_object_poses"
+    manual_detection_topic: "GUI_MANUAL_DETECTION_POINTS"
+    debug_image_topic: "ICG_Tracker_Streaming/image_raw"

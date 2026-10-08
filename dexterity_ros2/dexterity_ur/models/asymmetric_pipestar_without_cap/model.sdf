@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+	<model name="asymmetric_pipestar_without_cap">
+		<static>true</static>
+		<link name="Pipestar_base">
+			<inertial>
+				<pose>0 0 0.027404 0 0 0</pose>
+				<mass>3.0</mass>
+				<inertia>
+					<ixx>0.1</ixx>
+					<ixy>0.0</ixy>
+					<ixz>0.0</ixz>
+					<iyy>0.1</iyy>
+					<iyz>0.0</iyz>
+					<izz>0.1</izz>
+				</inertia>
+			</inertial>
+			<collision name="Base">
+				<pose>0 0 0 0 0 0</pose>
+				<geometry>
+					<mesh>
+						<uri>model://asymmetric_pipestar_without_cap/meshes/asymmetric_pipestar_without_cap.dae</uri>
+					</mesh>
+				</geometry>
+			</collision>
+			<visual name="visual">
+				<pose>0 0 0 0 0 0</pose>
+				<geometry>
+					<mesh>
+						<uri>model://asymmetric_pipestar_without_cap/meshes/asymmetric_pipestar_without_cap.dae</uri>
+					</mesh>
+				</geometry>
+			</visual>
+		</link>
+	</model>
+</sdf>

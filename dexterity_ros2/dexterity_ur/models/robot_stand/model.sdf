@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="robot_stand">
+    <static>true</static>
+    <!-- The robot base is at z = 0.3 m. The top is 1 mm lower, so the stand does not touch the base. -->
+    <link name="stand">
+      <pose>0 0 0.1495 0 0 0</pose>
+      <collision name="collision">
+        <geometry><box><size>0.25 0.25 0.299</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><box><size>0.25 0.25 0.299</size></box></geometry>
+        <material>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

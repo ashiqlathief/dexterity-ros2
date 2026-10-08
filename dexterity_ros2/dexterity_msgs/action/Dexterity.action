@@ -1,0 +1,23 @@
+# Goal (ROS 2 port of the ROS 1 DexterityAction; field names are snake_case as ROS 2 requires)
+string command                   # inspect_stationary | inspect_non_stationary | touch | grasp | stop | reset | update_parameters
+bool simulator_mode
+float32 accuracy
+string tracker_mode              # hybrid | me | klt
+string tracker_name              # visp | icg | m3t
+string object_model              # CAD file in dexterity/config/cad_models, e.g. cube_at_rl2.cao
+string object_side               # top | front | right | sideyy
+float32 tag_size
+string tag_family
+string pose_estimation_method
+uint8 inspection_pose_error_margin
+uint8 inspection_orientation_error_margin
+bool open_loop_mode
+bool orientation_lock
+float32 inspection_distance
+string gripper_frame_id
+string truncation_type           # half_trajectory | quater_trajectory | step_by_step
+float32 planning_timeout
+---
+bool success
+---
+float32 percentage

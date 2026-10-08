@@ -1,0 +1,12 @@
+<library path="dexterity_gui">
+  <class name="dexterity_gui/ArmControl" type="dexterity_gui::ArmControl" base_class_type="rqt_gui_cpp::Plugin">
+    <description>Operate the dexterity hand-eye controller (inspect, follow, touch, grasp, stop, reset).</description>
+    <qtgui>
+      <group>
+        <label>Robot Tools</label>
+      </group>
+      <label>Dexterity Arm Control</label>
+      <statustip>Start dexterity tasks and set their parameters.</statustip>
+    </qtgui>
+  </class>
+</library>

@@ -1,0 +1,9 @@
+repositories:
+  grippers/serial:
+    type: git
+    url: https://github.com/tylerjw/serial.git
+    version: ros2            # d8d1606
+  grippers/ros2_robotiq_gripper:
+    type: git
+    url: https://github.com/picknikrobotics/ros2_robotiq_gripper.git
+    version: main            # a74d007
